@@ -1,0 +1,141 @@
+<html>
+
+<head>
+<link rel="stylesheet" href="Browser/webml.css"></link>
+<style>
+h1 {
+color:white;
+font-family:monospace;
+}
+h3 {
+color:blue;
+font-family:monospace;
+}
+#textareaC {
+height:400px;
+width:400px;
+}
+#outputelem {
+height:400px;
+width:400px;
+}
+#infoelem {
+height:100px;
+width:400px;
+}
+#codeoutputset {
+height:100px;
+width:400px;
+}
+body {
+background-color:black;
+}
+</style>
+</head>
+
+<body>
+
+
+<script type="application/javascript" src="webml.js"></script>
+<script type="application/javascript" src="storage.js"></script>
+<h1>webML  Playground</h1>
+<button onclick="runScript();">Run</button>
+<button onclick="examplesLoad()">Load Examples</button>
+<button onclick="loadScript()">Load</button><button onclick="sendInfo()">Info</button>
+<br></br>
+<textarea id="textareaC">
+</textarea>
+
+<script type="application/javascript">
+function runScript(){
+webml();
+}
+window.console = {
+  log: function(str){
+    var docelem = document.getElementById('outputelem');
+    docelem.value = docelem.value + str + "\n";
+  },
+  
+  append_sendout: function(str2){
+    var docelemw = document.getElementById('codeoutputset');
+    docelemw.value = docelemw.value + str2;
+  },
+
+  full_sendout: function(str3){
+    var docelemd = document.getElementById('codeoutputset');
+    docelemd.value = str3;
+  }
+}
+
+function loadScript(){
+var textar = document.getElementById('textareaC');
+var scriptArea = document.getElementById('loader');
+scriptArea.text = textar.value;
+}
+
+function sendInfo(){
+var docelem = document.getElementById('infoelem');
+docelem.value = docelem.value + "AppName: " + ApplicationStorage.app.appname + "\n" + "Version: v" + Parser.version + "\n" + "WebML Tools: " + "v1.2.0\n\n" + "WebML Linker: v1.2.0" + ApplicationStorage.app.parseroutinfo;
+}
+
+
+function examplesLoad(){
+var docelem = document.body;
+docelem.innerHTML = docelem.innerHTML + '<br></br><div style="background-color:white;width:300px;"><center><h3>Examples</h3></center>&nbsp;&nbsp;<a href="javascript:loadprintexample();">examples/PrintOutExample.wl</a><br></br>&nbsp;&nbsp;<a href="javascript:loadlogicexample();">examples/LogicExample.wl</a><br></br>&nbsp;&nbsp;<a href="javascript:loaduiexample();">examples/UIExample.wl</a><br></br>&nbsp;&nbsp;<a href="javascript:loadjsexample();">examples/JavascriptExample.wl</a><br></br>&nbsp;&nbsp;<a href="javascript:loadcustomexample();">examples/Customizer.wl</a><br></br>&nbsp;&nbsp;<a href="javascript:loadhelloexample();">examples/HelloWorld.wl</a><br></br>&nbsp;&nbsp;<a href="javascript:loadmathexample();">examples/Math.wl</a><br></br></div><br></br>';
+}
+
+function loadprintexample(){
+var docelem = document.getElementById('textareaC');
+docelem.value = '@@ Text Out class;\napp OUTExample;\nout write -----Hello-----;\nout newline;\nout append Hello;';
+}
+
+function loaduiexample(){
+var docelem = document.getElementById('textareaC');
+docelem.value = '@@ UI Browser class;\napp UIExample;\nui write <h1>UIClassExample:h1</h1>;\nui add <p>UIClassSmallText</p>;';
+}
+
+function loadjsexample(){
+var docelem = document.getElementById('textareaC');
+docelem.value = '@@ JS Native Link Class;\napp JSExample;\nffi alert("Hello");\nsv Name = "null";\nffi Name=prompt("What Is Your name?");\nffi console.log("Your Name Is:" + Name);';
+}
+
+function loadhelloexample(){
+var docelem = document.getElementById('textareaC');
+docelem.value = '@@ Hello World Demo;\napp HelloWorld;\nout write HelloWorld;';
+}
+
+function loadmathexample(){
+var docelem = document.getElementById('textareaC');
+docelem.value = '@@ Math Demo;\napp MathDemo;\nffi console.log(5*5+5);';
+}
+
+
+function loadlogicexample(){
+var docelem = document.getElementById('textareaC');
+docelem.value = '@@ Logic Class Example;\n@@ Warning: while command crashes webkit browsers!;\napp LogicExample;\nsv Save = prompt("Answer[5+5]:");\nif Save=="10" alert("Wright!");\nif Save!="10" alert("Wrong!");';
+}
+
+function loadcustomexample(){
+var docelem = document.getElementById('textareaC');
+docelem.value = '@@ Editor Customizer;\napp demo;\nsv AnsCol = prompt("Color:");\nffi document.body.style.background = AnsCol;';
+}
+</script>
+
+<script type="text/webml" id="loader">
+app Blank(NothingLoaded);
+</script>
+
+
+<textarea id="outputelem">
+----------- webML compiler and linker v4.5.0 -----------
+</textarea>
+<br></br>
+<textarea id="infoelem">
+</textarea>
+
+<textarea id="codeoutputset">
+</textarea>
+
+</body>
+
+</html>
